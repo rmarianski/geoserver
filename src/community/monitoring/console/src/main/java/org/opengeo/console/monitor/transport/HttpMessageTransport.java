@@ -19,8 +19,10 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.geoserver.monitor.RequestData;
 import org.geotools.util.logging.Logging;
+import org.opengis.geometry.BoundingBox;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
 
 /**
  * Meant to just be a proof of concept for sending a post out
@@ -149,6 +151,18 @@ public class HttpMessageTransport implements MessageTransport {
         if (requestData.getRemoteCountry() != null) {
             json.element("remote_latitude", requestData.getRemoteLat());
             json.element("remote_longitude", requestData.getRemoteLon());
+        }
+
+        // encode the bounding box as a list of:
+        // [minx, maxx, miny, maxy]
+        BoundingBox bbox = requestData.getBbox();
+        if (bbox != null) {
+            Double minX = bbox.getMinX();
+            Double maxX = bbox.getMaxX();
+            Double minY = bbox.getMinY();
+            Double maxY = bbox.getMaxY();
+            List<Double> bboxList = ImmutableList.of(minX, maxX, minY, maxY);
+            json.element("bbox", bboxList);
         }
 
         json.elementOpt("error", requestData.getErrorMessage());
