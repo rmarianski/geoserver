@@ -21,6 +21,7 @@
     
     <bean id="monitor" class="org.geoserver.monitor.Monitor">
       <constructor-arg ref="monitorConfig"/>
+      <constructor-arg ref="geoServer" />
     </bean>
 
     <!-- the top level monitoring filter -->
@@ -116,9 +117,11 @@
         <property name="order" value="20"/>
    </bean>
   
+   <!--
     <bean id="monitorSessionFilter" class="org.springframework.orm.hibernate3.support.OpenSessionInViewFilter">
       <property name="sessionFactoryBeanName" value="hibSessionFactory"/>
     </bean>
+   -->
     
     <!-- post processors -->
     <bean id="layerNameNormalizer" class="org.geoserver.monitor.LayerNameNormalizer">

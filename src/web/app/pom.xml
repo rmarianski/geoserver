@@ -586,7 +586,7 @@
       <dependencies>
         <dependency>
           <groupId>org.geoserver.community</groupId>
-          <artifactId>monitoring</artifactId>
+          <artifactId>monitor-core</artifactId>
           <version>${project.version}</version>
         </dependency>
       </dependencies>
